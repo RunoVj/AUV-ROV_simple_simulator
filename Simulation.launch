@@ -2,8 +2,7 @@
 <launch>
 
   <!--If world configuration is NOT saved-->  
-  <include file="$(find auv_gazebo)/launch/pool.launch" />
-  <include file="$(find auv_gazebo)/launch/bottom_objects.launch" />
+  <include file="$(find auv_gazebo)/launch/boat_world.launch" />
   <!--include file="$(find auv_gazebo)/launch/AUV_spawn.launch" /-->
 
   <!--If world configuration is saved-->  

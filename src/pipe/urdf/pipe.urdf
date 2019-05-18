@@ -1,0 +1,43 @@
+<robot
+  name="pipe">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="10.945 -1.3483E-19 -0.69719"
+        rpy="0 0 0" />
+      <mass
+        value="201.03" />
+      <inertia
+        ixx="347.73"
+        ixy="1.7205E-16"
+        ixz="243.15"
+        iyy="6737.2"
+        iyz="1.2402E-16"
+        izz="6389.7" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://pipe/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://pipe/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+</robot>

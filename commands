@@ -1,0 +1,1 @@
+rosrun image_view image_view image:=/ROV_model_URDF/camera_bottom/image_raw
