@@ -3,6 +3,7 @@
 import rospy
 from geometry_msgs.msg import Twist
 import asyncio
+import struct
 
 host = "127.0.0.1"
 port = 9090
@@ -48,17 +49,18 @@ class Movement:
         self.move.linear.x -= speed;
         self.publish()
 
-    def left(self, speed):
-        print("move left")
-        self.reset()
-        self.move.linear.y = speed
-        self.publish()
+    def lag(self, speed):
+        try:
+            self.reset()
+            if speed > 0:
+                print("move left")
+            else:
+                print("move right")
+            self.move.linear.y = -speed
+            self.publish()
+        except Exception as e:
+            print(e.message)
 
-    def right(self, speed):
-        print("move right")
-        self.reset()
-        self.move.linear.y -= speed;
-        self.publish()
 
     def stop(self):
         self.reset()
@@ -84,11 +86,16 @@ class UDPServer:
     def connection_made(self, transport):
         self.transport = transport
 
-    def datagram_received(self, data, addr):
-        message = data
-        print('Received %r from %s' % (int(message[-1]), addr))
+    def parse_double(self, data):
+        return struct.unpack('d', data[::-1])
 
-        move.rotate_left(int(message[-1])/255)
+
+    def datagram_received(self, data, addr):
+        print('Received %r from %s' % (data, addr))
+        data = self.parse_double(data)
+        print(f'Data after parsing: {data[0]}')
+        move.lag(data[0])
+
 
 
 async def main():
@@ -102,7 +109,7 @@ async def main():
 
     print(f"Created server: \nhost - {host}, port - {port}")
     try:
-        await asyncio.sleep(60)  # Serve for 1 minute.
+        await asyncio.sleep(3600)  # Serve for 1 minute.
     finally:
         move.stop()
         transport.close()
